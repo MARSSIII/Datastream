@@ -6,6 +6,13 @@ import PlayIcon from '../assets/play.svg?react';
 import PauseIcon from '../assets/pause.svg?react';
 import VolumeIcon from '../assets/volume-full.svg?react';
 
+const formatTime = (timeInSeconds: number): string => {
+  if (isNaN(timeInSeconds)) return '00:00';
+  const minutes = Math.floor(timeInSeconds / 60);
+  const seconds = Math.floor(timeInSeconds % 60);
+  return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+};
+
 interface PlayerProps {
   track: Track;
   isPlaying: boolean;
@@ -48,6 +55,14 @@ const Player: React.FC<PlayerProps> = ({ track, isPlaying, onTogglePlay }) => {
     setVolume(newVolume);
   };
 
+    const handleSeek = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (audioRef.current) {
+      const newTime = parseFloat(e.target.value);
+      audioRef.current.currentTime = newTime;
+      setCurrentTime(newTime);
+    }
+  };
+
   return (
     <div className="fixed bottom-0 left-0 right-0 p-3 bg-gray-200 text-black z-50">
       <audio
@@ -60,9 +75,25 @@ const Player: React.FC<PlayerProps> = ({ track, isPlaying, onTogglePlay }) => {
       
       <div className="flex items-center gap-5">
         <img src={track.cover} alt={track.title} className="w-16 h-16 rounded" />
-        <div>
-          <p className="font-bold">{track.title}</p>
-          <p className="text-gray-400">{track.artist}</p>
+
+        <div className='flex-col w-full'>
+          <div>
+            <p className="font-bold whitespace-nowrap">{track.title}</p>
+            <p className="text-gray-400">{track.artist}</p>
+          </div>
+          
+          <div className="w-full flex items-center gap-2">
+            <span className="text-sm text-gray-600 text-right">{formatTime(currentTime)}</span>
+              <input
+                type="range"
+                min={0}
+                max={duration || 0}
+                value={currentTime}
+                onChange={handleSeek}
+                className="w-full h-1 bg-gray-400 rounded-lg appearance-none cursor-pointer"
+              />
+              <span className="text-sm text-gray-600 w-10 text-left">{formatTime(duration)}</span>
+          </div>
         </div>
 
         <button onClick={onTogglePlay} className="">
@@ -72,7 +103,6 @@ const Player: React.FC<PlayerProps> = ({ track, isPlaying, onTogglePlay }) => {
             <PlayIcon className='w-6 h-6'/>
           )}
         </button>
-        {/* ProgressBar */}
 
         <div className='flex items-center gap-2'>
           <VolumeIcon className="w-6 h-6 text-gray-600" />
