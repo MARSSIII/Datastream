@@ -5,6 +5,8 @@ import { type Track } from '../types';
 import PlayIcon from '../assets/play.svg?react';
 import PauseIcon from '../assets/pause.svg?react';
 import VolumeIcon from '../assets/volume-full.svg?react';
+import SkipBackwardIcon from '../assets/skip-backward.svg?react';
+import SkipForwardIcon from '../assets/skip-forward.svg?react';
 
 const formatTime = (timeInSeconds: number): string => {
   if (isNaN(timeInSeconds)) return '00:00';
@@ -96,12 +98,20 @@ const Player: React.FC<PlayerProps> = ({ track, isPlaying, onTogglePlay }) => {
           </div>
         </div>
 
-        <button onClick={onTogglePlay} className="">
+        <button>
+          <SkipBackwardIcon className='w-8 h-8 cursor-pointer'/>
+        </button>
+
+        <button onClick={onTogglePlay}>
           {isPlaying ? (
-            <PauseIcon className='w-6 h-6'/>
+            <PauseIcon className='w-6 h-6 cursor-pointer'/>
           ) : (
-            <PlayIcon className='w-6 h-6'/>
+            <PlayIcon className='w-6 h-6 cursor-pointer'/>
           )}
+        </button>
+
+        <button>
+          <SkipForwardIcon className='w-8 h-8 cursor-pointer'/>
         </button>
 
         <div className='flex items-center gap-2'>
