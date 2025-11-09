@@ -76,11 +76,11 @@ const Player: React.FC<PlayerProps> = ({ track, isPlaying, onTogglePlay }) => {
       />
       
       <div className="flex items-center gap-5">
-        <img src={track.cover} alt={track.title} className="w-16 h-16 rounded" />
+        <img src={track.cover} alt={track.title} className="w-16 h-16 rounded hidden md:block" />
 
-        <div className='flex-col w-full'>
+        <div className='flex-col w-full truncate'>
           <div>
-            <p className="font-bold whitespace-nowrap">{track.title}</p>
+            <p className="font-bold">{track.title}</p>
             <p className="text-gray-400">{track.artist}</p>
           </div>
           
@@ -114,7 +114,7 @@ const Player: React.FC<PlayerProps> = ({ track, isPlaying, onTogglePlay }) => {
           <SkipForwardIcon className='w-8 h-8 cursor-pointer'/>
         </button>
 
-        <div className='flex items-center gap-2'>
+        <div className='hidden md:flex items-center gap-2'>
           <VolumeIcon className="w-6 h-6 text-gray-600" />
           
           <input
