@@ -6,6 +6,15 @@ const resources = {
     translation: {
       "nothingPlaying": "Nothing is playing",
       "changeTheme": "Change theme",
+      "albums": "Albums",
+      "all": "All",
+      "random": "Random",
+      "recently_added": "Recently Added",
+      "recently_played": "Recently Played",
+      "most_played": "Most Played",
+      "artists": "Artists",
+      "songs": "Songs",
+      "playlists": "Playlists"
     }
   },
   ru: {
