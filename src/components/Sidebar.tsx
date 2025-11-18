@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 import AlbumsIcon from '../assets/albums.svg?react';
@@ -29,59 +30,59 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen }) => {
         </div>
 
         <div className='flex-column pl-5'>
-          <a href='#' className={itemClasses}>
+          <Link to='/albums/all' className={itemClasses}>
             <AlbumsIcon className="w-6 h-6 stroke-current fill-current" />
             <span>{t('all')}</span>
-          </a>
+          </Link>
         </div>
 
         <div className='flex-column pl-5'>
-          <a href='#' className={itemClasses}>
+          <Link to='/albums/random' className={itemClasses}>
             <RandomAlbums className="w-6 h-6 stroke-current fill-current" />
             <span>{t('random')}</span>
-          </a>
+          </Link>
         </div>
 
         <div className='flex-column pl-4'>
-          <a href='#' className={itemClasses}>
+          <Link to='albums/recent-added' className={itemClasses}>
             <RecentlyAdded className="w-8 h-8 mr-2 stroke-current fill-current" />
             <span>{t('recently_added')}</span>
-          </a>
+          </Link>
         </div>
 
         <div className='flex-column pl-5'>
-          <a href='#' className={itemClasses}>
+          <Link to='albums/recent-played' className={itemClasses}>
             <RecentlyPlayed className="w-6 h-6 stroke-current fill-current" />
             <span>{t('recently_played')}</span>
-          </a>
+          </Link>
         </div>
 
         <div className='flex-column pl-5'>
-          <a href='#' className={itemClasses}>
+          <Link to='albums/most-played' className={itemClasses}>
             <MostPlayed className="w-6 h-6 stroke-current fill-current" />
             <span>{t('most_played')}</span>
-          </a>
+          </Link>
         </div>
 
         <div className='flex-column'>
-          <a href='#' className={itemClasses}>
+          <Link to='artists' className={itemClasses}>
             <ArtistsIcon className="w-6 h-6 stroke-current fill-current" />
             <span>{t('artists')}</span>
-          </a>
+          </Link>
         </div>
 
         <div className='flex-column'>
-          <a href='#' className={itemClasses}>
+          <Link to='songs' className={itemClasses}>
             <SongsIcon className="w-6 h-6 stroke-current fill-current" />
             <span>{t('songs')}</span>
-          </a>
+          </Link>
         </div>
 
         <div className='flex-column'>
-          <a href='#' className={itemClasses}>
+          <Link to='playlists' className={itemClasses}>
             <PlaylistsIcon className="w-6 h-6 stroke-current fill-current" />
             <span>{t('playlists')}</span>
-          </a>
+          </Link>
         </div>
       </nav>
     </aside>

@@ -1,14 +1,13 @@
 import { useState, useEffect } from 'react'
-import { useTranslation } from 'react-i18next';
+import { Routes, Route, Navigate } from 'react-router-dom';
+
+import AlbumsPage from './pages/AlbumsPage';
 
 import Header from './components/Header'
 import Sidebar from './components/Sidebar';
 import Player from './components/Player';
-import AlbumGrid from './components/AlbumGrid';
 
-import { type Theme, type Track, type Album } from './types';
-
-import { useAlbums } from './hooks/useAlbums';
+import { type Theme, type Track} from './types';
 
 const trackList = [
   { id: 1, title: '01 Schwanengesang, D. 957_ IV. Ständchen (v0.10.27)', artist: '1000 Eyes', src: '/music/01 Schwanengesang, D. 957_ IV. Ständchen (v0.10.27).flac', cover: '/covers/Schwanengesang.png' },
@@ -16,15 +15,11 @@ const trackList = [
 ];
 
 function App() {
-  const { t } = useTranslation();
-
   const [currentTheme, setCurrentTheme] = useState('light');
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   const [currentTrack, setCurrentTrack] = useState(trackList[0]);
   const [isPlaying, setIsPlaying] = useState(false);
-
-  const { albums, isLoading, error } = useAlbums();
 
   const handleThemeChange = () => {
     setCurrentTheme(currentTheme == 'light' ? 'dark' : 'light');
@@ -33,10 +28,6 @@ function App() {
   const handleToggleSidebar = () => {
     setIsSidebarOpen(prev => !prev);
   }
-
-  const handleSelectAlbum = (album: Album) => {
-    console.log('Album chosen:', album.title);
-  };
 
   const handleSelectTrack = (track: Track) => {
     setCurrentTrack(track);
@@ -77,16 +68,10 @@ function App() {
       />
 
       <main className={`pt-12 pb-24 transition-all duration-300 ease-in-out ${isSidebarOpen ? 'md:ml-55' : ''}`}>
-         {isLoading && <p>{t('albumsLoading')}</p>}
-
-         {error && <p className="text-red-500">{error}</p>}
-
-         {!isLoading && !error && (
-            <AlbumGrid 
-              albums={albums} 
-              onSelectAlbum={handleSelectAlbum} 
-            />
-          )}
+         <Routes>
+          <Route path="/" element={<Navigate to="/albums/all" replace />} />
+          <Route path="/albums/all" element={<AlbumsPage />} />
+        </Routes>
       </main>
       <Player 
         track={currentTrack}
