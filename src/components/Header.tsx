@@ -1,10 +1,19 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 import UpdateIcon from '../assets/update.svg?react';
 import UserIcon from '../assets/user.svg?react';
 import ThemeIcon from '../assets/theme.svg?react';
 import MenuIcon from '../assets/burger-menu.svg?react';
+
+const translatableSegments: { [key: string]: string } = {
+  '/albums': 'albums',
+  '/artists': 'artists',
+  '/songs': 'songs',
+  '/playlists': 'playlists',
+  'all': 'all',
+};
 
 interface HeaderProps {
   onChangeTheme: () => void;
@@ -13,6 +22,31 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ onChangeTheme, onToggleSidebar }) => {
   const { t } = useTranslation();
+  const location = useLocation();
+
+  const generatePageTitle = (): string => {
+    const { pathname } = location;
+
+    const pathSegments = pathname.split('/').filter(Boolean);
+
+    const titleParts = pathSegments.map(segment => {
+      const translationKey = translatableSegments[segment];
+      
+      if (translationKey) {
+        return t(translationKey);
+      }
+      
+      return decodeURIComponent(segment).replace(/-/g, ' ');
+    });
+
+    const dynamicTitle = titleParts
+      .map(part => part.charAt(0).toUpperCase() + part.slice(1))
+      .join(' - ');
+
+    return `Datastream - ${dynamicTitle}`;
+  };
+  
+  const pageTitle = generatePageTitle();
 
   return (
     <div className='fixed top-0 left-0 right-0 p-3 pr-6 pl-6 bg-bg text-fg z-50 shadow-md flex justify-between items-center
@@ -27,7 +61,7 @@ const Header: React.FC<HeaderProps> = ({ onChangeTheme, onToggleSidebar }) => {
           <MenuIcon className="w-6 h-6 stroke-current" />
         </button>
 
-        <span>Datastream - pageName</span>
+        <span>{pageTitle}</span>
       </div>
 
       <div className='flex items-center gap-6'>
