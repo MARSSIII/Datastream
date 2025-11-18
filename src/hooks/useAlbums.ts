@@ -4,18 +4,28 @@ import { type Album } from '../types';
 
 const mockAlbums: Album[] = [
   {
-    id: 1,
+    id: '1',
     title: 'Charon',
     artist: '1000 Eyes',
-    year: 2025,
-    cover: '/covers/charon.jpg'
+    date: '2025-01-01',
+    cover: '/covers/charon.jpg',
+    genres: ['Ambient', 'Drum & Bass'],
+    tracklist: [],
+    trackCount: 0,
+    duration: '0',
+    size: '0 MB'
   },
   {
-    id: 2,
+    id: '2',
     title: 'Schwanengesang',
     artist: '1000 Eyes',
-    year: 2025,
-    cover: '/covers/Schwanengesang.png'
+    date: '2025-01-01',
+    cover: '/covers/Schwanengesang.png',
+    genres: ['Classical'],
+    tracklist: [],
+    trackCount: 0,
+    duration: '0',
+    size: '0 MB'
   },
 ];
 
@@ -30,7 +40,7 @@ export const useAlbums = () => {
         setAlbums(mockAlbums);
 
       } catch (e) {
-        setError('Не удалось загрузить альбомы.');
+        setError('Cannot load album.');
         console.error(e);
       } finally {
         setIsLoading(false);

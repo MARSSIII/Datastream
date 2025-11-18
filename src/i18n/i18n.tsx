@@ -15,7 +15,16 @@ const resources = {
       "artists": "Artists",
       "songs": "Songs",
       "playlists": "Playlists",
-      "albumsLoading": "Albums loading..."
+      "loading": "Loading...",
+      "trackTitle": "Title",
+      "artist": "Artist",
+      "duration": "Duration",
+      "played": "Played",
+      "quality": "Quality",
+      "fileSize": "File Size",
+      "genres": "Genres",
+      "error": "Error",
+      "nothingFound": "Nothing found"
     }
   },
   ru: {

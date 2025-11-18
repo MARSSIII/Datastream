@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { Routes, Route, Navigate } from 'react-router-dom';
 
 import AlbumsPage from './pages/AlbumsPage';
+import AlbumDetailPages from './pages/AlbumDetailsPage'; 
 
 import Header from './components/Header'
 import Sidebar from './components/Sidebar';
@@ -10,8 +11,7 @@ import Player from './components/Player';
 import { type Theme, type Track} from './types';
 
 const trackList = [
-  { id: 1, title: '01 Schwanengesang, D. 957_ IV. Ständchen (v0.10.27)', artist: '1000 Eyes', src: '/music/01 Schwanengesang, D. 957_ IV. Ständchen (v0.10.27).flac', cover: '/covers/Schwanengesang.png' },
-  { id: 2, title: 'Ocean Drive', artist: 'Night Rider', src: '/music/song2.mp3', cover: '/covers/cover2.jpg' },
+  { id: 1, trackNumber: 1, plays: 5, size: '15.75 MB', genres: ['classical'], title: '01 Schwanengesang, D. 957_ IV. Ständchen (v0.10.27)', artist: '1000 Eyes', src: '/music/01 Schwanengesang, D. 957_ IV. Ständchen (v0.10.27).flac', cover: '/covers/Schwanengesang.png', duration: '03:13', quality: 'FLAC' },
 ];
 
 function App() {
@@ -71,6 +71,7 @@ function App() {
          <Routes>
           <Route path="/" element={<Navigate to="/albums/all" replace />} />
           <Route path="/albums/all" element={<AlbumsPage />} />
+          <Route path="/albums/:albumId" element={<AlbumDetailPages />} />
         </Routes>
       </main>
       <Player 

@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 
 import { useAlbums } from '../hooks/useAlbums';
 import AlbumGrid from '../components/AlbumGrid';
@@ -6,19 +7,19 @@ import { type Album } from '../types';
 
 const AlbumsPage = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   
   const { albums, isLoading, error } = useAlbums();
 
   const handleSelectAlbum = (album: Album) => {
-    console.log('Album chosen:', album.title);
-    // TODO: album page
+    navigate(`/albums/${album.id}`);
   };
 
   return (
     <div>    
-      {isLoading && <p>{t('albumsLoading')}</p>}
+      {isLoading && <p>{t('loading')}</p>}
 
-      {error && <p className="text-red-500">{error}</p>}
+      {error && <p>{error}</p>}
 
       {!isLoading && !error && (
         <AlbumGrid 
