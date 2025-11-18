@@ -15,7 +15,7 @@ const trackList = [
 ];
 
 function App() {
-  const [currentTheme, setCurrentTheme] = useState('light');
+  const [currentTheme, setCurrentTheme] = useState<Theme>('light');
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   const [currentTrack, setCurrentTrack] = useState(trackList[0]);
