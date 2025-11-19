@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { type Track } from '../types';
 
@@ -12,12 +13,14 @@ interface PlayQueueProps {
 }
 
 const PlayQueue: React.FC<PlayQueueProps> = ({ queue, currentTrack, onPlayTrack, onClose }) => {
+  const { t } = useTranslation();
+
   return (
     <div className="absolute bottom-full right-0 mr-4 mb-2 md:w-100 border border-fg/10 rounded-xl z-50 flex flex-col
                     transition-colors duration-300 ease-in-out">
       
       <div className="p-3 border-b border-fg/10 flex justify-between items-center">
-        <h3 className="text-sm">Play Queue</h3>
+        <h3 className="text-sm">{t('playQueue')}</h3>
 
         <button
           onClick={onClose}

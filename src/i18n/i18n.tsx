@@ -24,7 +24,8 @@ const resources = {
       "fileSize": "File Size",
       "genres": "Genres",
       "error": "Error",
-      "nothingFound": "Nothing found"
+      "nothingFound": "Nothing found",
+      "playQueue": "Play Queue"
     }
   },
   ru: {
