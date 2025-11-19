@@ -42,20 +42,9 @@ function App() {
     setIsPlaying(prev => !prev);
   };
 
-  const handleNextTrack = () => {
-    const currentIndex = queue.findIndex(t => t.id === currentTrack.id);
-    if (currentIndex < queue.length - 1) {
-      setCurrentTrack(queue[currentIndex + 1]);
-      setIsPlaying(true);
-    }
-  };
-
-  const handlePrevTrack = () => {
-    const currentIndex = queue.findIndex(t => t.id === currentTrack.id);
-    if (currentIndex > 0) {
-      setCurrentTrack(queue[currentIndex - 1]);
-      setIsPlaying(true);
-    }
+  const handlePlayFromQueue = (track: Track) => {
+    setCurrentTrack(track);
+    setIsPlaying(true);
   };
 
   useEffect(() => {
@@ -98,10 +87,8 @@ function App() {
         track={currentTrack}
         isPlaying={isPlaying}
         onTogglePlay={handleTogglePlayPause}
-        onNext={handleNextTrack}
-        onPrev={handlePrevTrack}
-        hasNext={queue.findIndex(t => t.id === currentTrack.id) < queue.length - 1}
-        hasPrev={queue.findIndex(t => t.id === currentTrack.id) > 0}
+        queue={queue} 
+        onPlayTrack={handlePlayFromQueue} 
       />
     </div>
   )
