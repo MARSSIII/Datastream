@@ -7,6 +7,9 @@ import PauseIcon from '../assets/pause.svg?react';
 import VolumeIcon from '../assets/volume-full.svg?react';
 import SkipBackwardIcon from '../assets/skip-backward.svg?react';
 import SkipForwardIcon from '../assets/skip-forward.svg?react';
+import PlaylistsIcon from '../assets/playlists.svg?react';
+
+import PlayQueue from './PlayQueue';
 
 const formatTime = (timeInSeconds: number): string => {
   if (isNaN(timeInSeconds)) return '00:00';
@@ -19,12 +22,20 @@ interface PlayerProps {
   track: Track;
   isPlaying: boolean;
   onTogglePlay: () => void;
+  queue: Track[];
+  onPlayTrack: (track: Track) => void;
 }
 
-const Player: React.FC<PlayerProps> = ({ track, isPlaying, onTogglePlay }) => {
+const Player: React.FC<PlayerProps> = ({ track, isPlaying, onTogglePlay, queue, onPlayTrack }) => {
+
   const [currentTime, setCurrentTime] = useState<number>(0);
   const [duration, setDuration] = useState<number>(0);
   const [volume, setVolume] = useState<number>(0.5);
+  const [isQueueOpen, setIsQueueOpen] = useState(false);
+
+  const currentIndex = queue.findIndex(t => t.id === track.id);
+  const hasPrev = currentIndex > 0;
+  const hasNext = currentIndex !== -1 && currentIndex < queue.length - 1;
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
@@ -43,6 +54,18 @@ const Player: React.FC<PlayerProps> = ({ track, isPlaying, onTogglePlay }) => {
       audioRef.current.volume = volume;
     }
   }, [volume]);
+
+  const handlePrev = () => {
+    if (hasPrev) {
+      onPlayTrack(queue[currentIndex - 1]);
+    }
+  };
+
+  const handleNext = () => {
+    if (hasNext) {
+      onPlayTrack(queue[currentIndex + 1]);
+    }
+  };
 
   const handleTimeUpdate = (e: React.SyntheticEvent<HTMLAudioElement>) => {
     setCurrentTime(e.currentTarget.currentTime);
@@ -67,12 +90,24 @@ const Player: React.FC<PlayerProps> = ({ track, isPlaying, onTogglePlay }) => {
 
   return (
     <div className="fixed bottom-0 left-0 right-0 p-3 bg-accent text-fg z-50 transition-colors duration-300 ease-in-out">
+      {isQueueOpen && (
+        <PlayQueue 
+          queue={queue}
+          currentTrack={track}
+          onPlayTrack={onPlayTrack}
+          onClose={() => setIsQueueOpen(false)}
+        />
+      )}
+      
       <audio
         ref={audioRef}
         src={track?.src}
         onTimeUpdate={handleTimeUpdate}
         onLoadedMetadata={handleLoadedMetadata}
-        onEnded={onTogglePlay}
+        onEnded={() => {
+            if (hasNext) handleNext();
+            else onTogglePlay();
+        }}
       />
       
       <div className="flex items-center gap-5">
@@ -98,7 +133,11 @@ const Player: React.FC<PlayerProps> = ({ track, isPlaying, onTogglePlay }) => {
           </div>
         </div>
 
-        <button>
+        <button onClick={() => setIsQueueOpen(!isQueueOpen)} title="Play Queue">
+          <PlaylistsIcon className='w-8 h-8 cursor-pointer fill-current'/>
+        </button>
+
+        <button onClick={handlePrev} disabled={!hasPrev}>
           <SkipBackwardIcon className='w-8 h-8 cursor-pointer fill-current'/>
         </button>
 
@@ -110,7 +149,7 @@ const Player: React.FC<PlayerProps> = ({ track, isPlaying, onTogglePlay }) => {
           )}
         </button>
 
-        <button>
+        <button onClick={handleNext} disabled={!hasNext}>
           <SkipForwardIcon className='w-8 h-8 cursor-pointer fill-current'/>
         </button>
 
