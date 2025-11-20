@@ -36,16 +36,33 @@ const AlbumDetailsPage: React.FC<AlbumDetailsPageProps> = ({ onPlayTrack }) => {
     return <div className="p-8">{t('nothingFound')}</div>;
   }
 
+  const handleShufflePlay = () => {
+    if (!album || album.tracklist.length === 0) return;
+
+    const shuffledTracks = [...album.tracklist];
+
+    for (let i = shuffledTracks.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffledTracks[i], shuffledTracks[j]] = [shuffledTracks[j], shuffledTracks[i]];
+    }
+
+    onPlayTrack(shuffledTracks[0], shuffledTracks);
+  };
+
   return (
     <div className='p-8'>
       <AlbumHeader album={album} />
 
       <div className='mt-8 flex gap-4 items-center'>
-        <button className='flex items-center gap-2 px-6 py-2 border border-fg/30 rounded-full hover:scale-105 transition-all'>
+        <button onClick={() => onPlayTrack(album.tracklist[0], album.tracklist)}
+                className='flex items-center gap-2 px-6 py-2 border border-fg/30 rounded-full hover:scale-105 transition-all'
+        >
           <PlayIcon className='w-4 h-4 fill-current stroke-current'/>
           <span className='uppercase text-sm'>Play</span>
         </button>
-        <button className='flex items-center gap-2 px-4 py-2 border border-fg/30 rounded-full hover:scale-105 transition-all'>
+        <button onClick={handleShufflePlay}
+                className='flex items-center gap-2 px-4 py-2 border border-fg/30 rounded-full hover:scale-105 transition-all'
+        >
           <ShuffleIcon className='w-4 h-4 fill-current stroke-current'/>
           <span className='uppercase text-sm'>Shuffle</span>
         </button>
