@@ -14,7 +14,7 @@ import PlaylistsIcon from '../assets/playlists.svg?react';
 const AlbumDetailsPage: React.FC = () => {
   const { t } = useTranslation();
 
-  const { playTrack } = usePlayer();
+  const { playTrack, addTracks } = usePlayer();
 
   const { albumId } = useParams();
   if (!albumId) {
@@ -63,9 +63,12 @@ const AlbumDetailsPage: React.FC = () => {
           <ShuffleIcon className='w-4 h-4 fill-current stroke-current'/>
           <span className='uppercase text-sm'>Shuffle</span>
         </button>
-        <button className='flex items-center gap-2 px-4 py-2 border border-fg/30 rounded-full hover:scale-105 transition-all'>
+        <button
+                onClick={() => addTracks(album.tracklist)}
+                className='flex items-center gap-2 px-4 py-2 border border-fg/30 rounded-full hover:scale-105 transition-all'
+        >
           <PlaylistsIcon className='w-4 h-4 fill-current stroke-current'/>
-          <span className='uppercase text-sm'>Add to playlist</span>
+          <span className='uppercase text-sm'>Add to play queue</span>
         </button>
       </div>
 

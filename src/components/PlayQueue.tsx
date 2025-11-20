@@ -16,7 +16,7 @@ const PlayQueue: React.FC<PlayQueueProps> = ({ queue, currentTrack, onPlayTrack,
   const { t } = useTranslation();
 
   return (
-    <div className="absolute bottom-full right-0 mr-4 mb-2 md:w-100 border border-fg/10 rounded-xl z-50 flex flex-col
+    <div className="absolute bottom-full right-0 mr-4 mb-2 md:w-100 border bg-bg border-fg/10 rounded-xl z-50 flex flex-col
                     transition-colors duration-300 ease-in-out">
       
       <div className="p-3 border-b border-fg/10 flex justify-between items-center">

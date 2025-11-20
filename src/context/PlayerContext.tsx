@@ -13,6 +13,7 @@ interface PlayerContextType {
   isPlaying: boolean;
   queue: Track[];
   playTrack: (track: Track, newQueue: Track[]) => void;
+  addTracks: (addQueue: Track[]) => void;
   setTrack: (track: Track) => void;
   togglePlay: () => void;
 }
@@ -30,6 +31,14 @@ export const PlayerProvider = ({ children }: { children: ReactNode }) => {
     setIsPlaying(true);
   };
 
+  const addTracks = (addQueue: Track[]) => {
+    for (const track of addQueue) {
+      if (!queue.find(t => t.id === track.id)) {
+        setQueue(prev => [...prev, track]);
+      }
+    }
+  };
+
   const setTrack = (track: Track) => {
     setCurrentTrack(track);
     setIsPlaying(true);
@@ -42,7 +51,7 @@ export const PlayerProvider = ({ children }: { children: ReactNode }) => {
   return (
     <PlayerContext.Provider value={{ 
       currentTrack, isPlaying, queue, 
-      playTrack, setTrack, togglePlay 
+      playTrack, addTracks, setTrack, togglePlay 
     }}>
       {children}
     </PlayerContext.Provider>
