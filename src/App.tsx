@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react'
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 
+import LoginPage from './pages/LoginPage';
 import AlbumsPage from './pages/AlbumsPage';
-import AlbumDetailsPages from './pages/AlbumDetailsPage'; 
+import AlbumDetailsPages from './pages/AlbumDetailsPage';
 
 import Header from './components/Header'
 import Sidebar from './components/Sidebar';
@@ -12,10 +13,14 @@ import { useLocalStorage } from './hooks/useLocalStorage';
 import { PlayerProvider } from './context/PlayerContext'; 
 
 import { type Theme } from './types';
+import AuthPage from './pages/LoginPage';
 
 function App() {
   const [currentTheme, setCurrentTheme] = useLocalStorage<Theme>('app-theme', 'light');
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+
+  const location = useLocation();
+  const isAuthPage = location.pathname === '/login' || location.pathname === '/register';
 
   const handleThemeChange = () => {
     setCurrentTheme(currentTheme == 'light' ? 'dark' : 'light');
@@ -46,23 +51,30 @@ function App() {
   return (
     <PlayerProvider>
       <div className='min-h-screen bg-bg text-fg transition-colors duration-300 ease-in-out'>
-        <Header
-          onChangeTheme={handleThemeChange}
-          onToggleSidebar={handleToggleSidebar}
-        />
+        {!isAuthPage && (
+          <>
+            <Header
+              onChangeTheme={handleThemeChange}
+              onToggleSidebar={handleToggleSidebar}
+            />
 
-        <Sidebar
-          isOpen={isSidebarOpen}
-        />
+            <Sidebar isOpen={isSidebarOpen} />
 
-        <main className={`pt-12 pb-24 transition-all duration-300 ease-in-out ${isSidebarOpen ? 'md:ml-55' : ''}`}>
+            <Player/>
+          </>
+        )}
+
+        <main className={`pt-12 pb-24 transition-all duration-300 ease-in-out
+          ${!isAuthPage ? 'pt-12 pb-24' : ''} 
+          ${!isAuthPage && isSidebarOpen ? 'md:ml-55' : ''}`}>
           <Routes>
             <Route path="/" element={<Navigate to="/albums/all" replace />} />
+            <Route path="/login" element={<AuthPage mode="login" />} />
+            <Route path="/register" element={<AuthPage mode="register" />} />
             <Route path="/albums/all" element={<AlbumsPage />} />
             <Route path="/albums/:albumId" element={<AlbumDetailsPages />} />
           </Routes>
         </main>
-        <Player/>
       </div>
     </PlayerProvider>
   )
