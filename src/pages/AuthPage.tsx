@@ -19,9 +19,9 @@ const AuthPage: React.FC<AuthPageProps> = ({ mode }) => {
     e.preventDefault();
     
     if (isLogin) {
-      await login(username, password);
+      login(username, password);
     } else {
-      await register(username, password);
+      register(username, password);
     }
   };
 
