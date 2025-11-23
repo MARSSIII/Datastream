@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
+
+import { useLocalStorage } from '../hooks/useLocalStorage';
 
 import ChevronIcon from '../assets/chevron-down.svg?react';
 
@@ -12,11 +14,19 @@ const languages = [
 const AccountPage: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const { i18n } = useTranslation();
-  const currentLang = languages.find(l => l.code === i18n.language) || languages[0];
+  const { i18n, t } = useTranslation();
+  const [savedLang, setSavedLang] = useLocalStorage<string>('app-lang', 'en');
+
+  useEffect(() => {
+    if (savedLang && i18n.language !== savedLang) {
+      i18n.changeLanguage(savedLang);
+    }
+  }, [savedLang, i18n]);
+
+  const currentLang = languages.find(l => l.code === savedLang) || languages[0];
 
   const handleSelect = (code: string) => {
-    i18n.changeLanguage(code);
+    setSavedLang(code);
     setIsOpen(false);
   };
 
@@ -28,7 +38,7 @@ const AccountPage: React.FC = () => {
       <h1 className='text-3xl mb-10'>Username</h1>
       <div className='flex flex-col gap-5'>
         <div className='flex gap-4 items-center'>
-          <p>Language</p>
+          <p>{t('language')}</p>
 
           <div className='relative'>
             <button 
@@ -60,40 +70,40 @@ const AccountPage: React.FC = () => {
         </div>
         
         <div className='flex gap-4 items-center'>
-          <p>Change nickname</p>
+          <p>{t('changeNickname')}</p>
           
           <input 
             type="text"
             value={newNickname}
             onChange={(e) => setNewNickname(e.target.value)}
-            placeholder="New nickname"
+            placeholder={t('newNickname')}
             className="px-4 py-2 border border-fg/20 rounded-lg outline-none focus:border-fg"
           />
 
           <button className='px-4 py-2 border border-fg/20 rounded-lg hover:bg-fg hover:text-bg cursor-pointer'>
-            Save
+            {t('save')}
           </button>
         </div>
 
         <div className='flex gap-4 items-center'>
-          <p>Change password</p>
+          <p>{t('changePassword')}</p>
 
           <input 
             type="password"
             value={newPassword}
             onChange={(e) => setNewPassword(e.target.value)}
-            placeholder="New password"
+            placeholder={t('newPassword')}
             className="px-4 py-2 border border-fg/20 rounded-lg outline-none focus:border-fg"
           />
 
           <button className='px-4 py-2 border border-fg/20 rounded-lg hover:bg-fg hover:text-bg cursor-pointer'>
-            Save
+            {t('save')}
           </button>
         </div>
 
         <Link to='/login'>
           <button className='mt-5 px-6 py-2 text-red-500 border rounded-lg hover:bg-red-500/10 cursor-pointer'>
-              Logout
+              {t('logout')}
           </button>
         </Link>
       </div>
