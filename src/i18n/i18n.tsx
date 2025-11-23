@@ -78,11 +78,19 @@ const resources = {
   }
 };
 
+const getLanguage = () => {
+  const saved = localStorage.getItem('app-lang');
+
+  if (!saved) return 'en';
+
+  return JSON.parse(saved);
+};
+
 i18next
   .use(initReactI18next)
   .init({
     resources,
-    lng: JSON.parse(localStorage.getItem('app-lang')|| 'en'),
+    lng: getLanguage(),
     interpolation: {
       escapeValue: false
     }
