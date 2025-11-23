@@ -6,7 +6,7 @@ export const useAuth = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const login = async (username: string, password: string) => {
+  const login = (username: string, password: string) => {
     setIsLoading(true);
     setError('');
 
@@ -20,7 +20,7 @@ export const useAuth = () => {
     }
   };
 
-  const register = async (username: string, password: string) => {
+  const register = (username: string, password: string) => {
     setIsLoading(true);
     setError('');
 

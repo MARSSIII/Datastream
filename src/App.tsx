@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 
-import LoginPage from './pages/LoginPage';
+import AuthPage from './pages/AuthPage';
+import AccountPage from './pages/AccountPage';
 import AlbumsPage from './pages/AlbumsPage';
 import AlbumDetailsPages from './pages/AlbumDetailsPage';
 
@@ -13,7 +14,6 @@ import { useLocalStorage } from './hooks/useLocalStorage';
 import { PlayerProvider } from './context/PlayerContext'; 
 
 import { type Theme } from './types';
-import AuthPage from './pages/LoginPage';
 
 function App() {
   const [currentTheme, setCurrentTheme] = useLocalStorage<Theme>('app-theme', 'light');
@@ -71,6 +71,7 @@ function App() {
             <Route path="/" element={<Navigate to="/albums/all" replace />} />
             <Route path="/login" element={<AuthPage mode="login" />} />
             <Route path="/register" element={<AuthPage mode="register" />} />
+            <Route path="/account" element={<AccountPage />} />
             <Route path="/albums/all" element={<AlbumsPage />} />
             <Route path="/albums/:albumId" element={<AlbumDetailsPages />} />
           </Routes>

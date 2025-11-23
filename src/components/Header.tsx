@@ -1,5 +1,5 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 import UpdateIcon from '../assets/update.svg?react';
@@ -12,6 +12,7 @@ const pageTitleKeys: { [key: string]: string } = {
   'artists': 'artists',
   'songs': 'songs',
   'playlists': 'playlists',
+  'account': 'account',
 };
 
 interface HeaderProps {
@@ -67,7 +68,9 @@ const Header: React.FC<HeaderProps> = ({ onChangeTheme, onToggleSidebar }) => {
 
         <UpdateIcon className='w-6 h-6 cursor-pointer stroke-current' />
         
-        <UserIcon className='w-6 h-6 cursor-pointer fill-current' />
+        <Link to='/account'>
+          <UserIcon className='w-6 h-6 cursor-pointer fill-current' />
+        </Link>
       </div>
     </div>
   )
