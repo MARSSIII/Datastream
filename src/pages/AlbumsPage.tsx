@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import { useAlbums, type FilterState } from '../hooks/useAlbums';
 import { useLocalStorage } from '../hooks/useLocalStorage';
@@ -15,16 +15,27 @@ const AlbumsPage = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useLocalStorage<number>('itemsPerPage', 18);
 
   const [filters, setFilters] = useState<FilterState>({
     search: '',
-    genre: '',
+    genre: searchParams.get('genre') || '',
     year: ''
   });
   
   const { albums, total, isLoading, error, availableGenres, availableYears } = useAlbums(currentPage, itemsPerPage, filters);
+
+  useEffect(() => {
+    const params: Record<string, string> = {};
+    if (filters.genre) params.genre = filters.genre;
+    if (filters.search) params.search = filters.search;
+    if (filters.year) params.year = filters.year;
+    
+    setSearchParams(params, { replace: true });
+  }, [filters.genre, filters.search, filters.year, setSearchParams]);
 
   const handleSearchChange = (val: string) => {
     setFilters(prev => ({ ...prev, search: val }));

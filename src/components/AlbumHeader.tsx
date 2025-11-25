@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { type Album } from '../types';
 
 interface AlbumHeaderProps {
@@ -6,6 +7,12 @@ interface AlbumHeaderProps {
 }
 
 const AlbumHeader: React.FC<AlbumHeaderProps> = ({ album }) => {
+  const navigate = useNavigate();
+
+  const handleGenreClick = (genre: string) => {
+    navigate(`/albums/all?genre=${encodeURIComponent(genre)}`);
+  };
+
   return (
     <div className='flex flex-col md:flex-row items-center md:items-start gap-4'>
       <img 
@@ -19,6 +26,20 @@ const AlbumHeader: React.FC<AlbumHeaderProps> = ({ album }) => {
         <p>
           {album.date} &bull; {album.trackCount} Songs &bull; {album.duration} &bull; {album.size}
         </p>
+
+        {album.genres && album.genres.length > 0 && (
+          <div className='flex flex-wrap gap-2 mt-2 justify-center md:justify-start'>
+            {album.genres.map((genre) => (
+              <button
+                key={genre}
+                onClick={() => handleGenreClick(genre)}
+                className='px-3 py-1 text-sm cursor-pointer rounded-full border border-fg/20 hover:bg-fg/10 hover:border-fg/40 transition-colors'
+              >
+                {genre}
+              </button>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

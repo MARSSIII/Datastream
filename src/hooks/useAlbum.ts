@@ -21,7 +21,7 @@ const mockAlbums: Album[] = [
     artist: '1000 Eyes',
     date: '2025-01-01',
     cover: '/covers/Schwanengesang.png',
-    genres: ['Classical'],
+    genres: ['Classical', 'Instrumental'],
     tracklist: [
       { id: 1, trackNumber: 1, plays: 5, size: '15.75 MB', genres: ['classical'], title: '01 Schwanengesang, D. 957_ IV. Ständchen (v0.10.27)', artist: '1000 Eyes', src: '/music/01 Schwanengesang, D. 957_ IV. Ständchen (v0.10.27).flac', cover: '/covers/Schwanengesang.png', duration: '03:13', quality: 'FLAC' },
       { id: 2, trackNumber: 2, plays: 2, size: '25.15 MB', genres: ['classical'], title: '01 Schwanengesang, D. 957_ IV. Ständchen (v0.10.27.slw)', artist: '1000 Eyes', src: '/music/02 Schwanengesang, D. 957_ IV. Ständchen (v0.10.27.slw).flac', cover: '/covers/Schwanengesang.png', duration: '02:33', quality: 'FLAC' }
