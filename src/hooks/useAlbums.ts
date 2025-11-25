@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-import { type Album } from '../types';
+import { type Album, type FilterState, type SortMode } from '../types';
 
 const seedAlbums: Album[] = [
   { id: '1', title: 'Charon', artist: '1000 Eyes', date: '2025-01-01', cover: '/covers/charon.jpg', genres: ['Ambient'], tracklist: [], trackCount: 0, duration: '0', size: '0 MB' },
@@ -18,14 +18,8 @@ for (let i = 0; i < 100; i++) {
   });
 }
 
-export interface FilterState {
-  search: string;
-  genre: string;
-  year: string;
-}
-
 // @ts-ignore
-export const useAlbums = (page: number, limit: number, filters: FilterState) => {
+export const useAlbums = (page: number, limit: number, filters: FilterState, sortMode: SortMode = 'default') => {
   const [albums, setAlbums] = useState<Album[]>([]);
   const [total, setTotal] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -39,8 +33,25 @@ export const useAlbums = (page: number, limit: number, filters: FilterState) => 
       try {
         const startIndex = (page - 1) * limit;
         const endIndex = startIndex + limit;
-        
-        const slicedAlbums = allMockAlbums.slice(startIndex, endIndex);
+
+        let slicedAlbums: Album[] = [];
+
+        if (sortMode === 'random') {
+          // tell backend to return random albums
+        }
+        else if (sortMode === 'recently-added') {
+          // tell backend to return recently added albums
+        }
+        else if (sortMode === 'recently-played') {
+          // tell backend to return recently played albums
+        }
+        else if (sortMode === 'most-played') {
+          // tell backend to return most played albums
+        }
+        else {
+           slicedAlbums = allMockAlbums.slice(startIndex, endIndex);
+        }
+        slicedAlbums = allMockAlbums.slice(startIndex, endIndex);
         
         setAlbums(slicedAlbums);
         setTotal(allMockAlbums.length);
@@ -55,7 +66,7 @@ export const useAlbums = (page: number, limit: number, filters: FilterState) => 
 
     fetchAlbums();
 
-  }, [page, limit]);
+  }, [page, limit, filters, sortMode]);
 
   return { albums, total, isLoading, error, availableGenres, availableYears };
 };

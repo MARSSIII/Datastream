@@ -41,7 +41,12 @@ const resources = {
       "itemsPerPage": "Items per page",
       "searchPlaceholder": "Search",
       "allGenres": "All Genres",
-      "allYears": "All Years"
+      "allYears": "All Years",
+      "sortName": "Alphabetical",
+      "sortRandom": "Random",
+      "sortNewest": "Recently Added",
+      "sortPlayed": "Recently Played",
+      "sortPopular": "Most Played"
     }
   },
   ru: {
@@ -83,7 +88,12 @@ const resources = {
       "itemsPerPage": "Элементов на странице",
       "searchPlaceholder": "Поиск",
       "allGenres": "Все жанры",
-      "allYears": "Все годы"
+      "allYears": "Все годы",
+      "sortName": "Алфавитный",
+      "sortRandom": "Случайные",
+      "sortNewest": "Недавно добавленные",
+      "sortPlayed": "Недавно прослушанные",
+      "sortPopular": "Чаще всего проигрываемые"
     }
   }
 };

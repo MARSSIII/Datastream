@@ -40,7 +40,7 @@ const Dropdown: React.FC<DropdownProps> = ({
           {placeholder && (
             <button
               onClick={() => handleOptionClick('')}
-              className='w-full px-4 py-2 flex gap-2 hover:bg-fg/5 transition-colors'
+              className='w-full text-left px-4 py-2 flex gap-2 hover:bg-fg/5 transition-colors'
             >
               <span>{placeholder}</span>
             </button>
@@ -50,7 +50,7 @@ const Dropdown: React.FC<DropdownProps> = ({
             <button
               key={opt}
               onClick={() => handleOptionClick(opt)}
-              className='w-full px-4 py-2 flex gap-2 hover:bg-fg/5 transition-colors'
+              className='w-full text-left px-4 py-2 flex gap-2 hover:bg-fg/5 transition-colors'
             >
 
               <span>{opt}</span>

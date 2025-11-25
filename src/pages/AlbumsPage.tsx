@@ -2,14 +2,14 @@ import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
-import { useAlbums, type FilterState } from '../hooks/useAlbums';
+import { useAlbums } from '../hooks/useAlbums';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 
 import AlbumGrid from '../components/AlbumGrid';
 import PaginationControls from '../components/PaginationControls';
 import Filters from '../components/Filters';
 
-import { type Album } from '../types';
+import { type Album, type FilterState, type SortMode } from '../types';
 
 const AlbumsPage = () => {
   const { t } = useTranslation();
@@ -23,19 +23,32 @@ const AlbumsPage = () => {
   const [filters, setFilters] = useState<FilterState>({
     search: '',
     genre: searchParams.get('genre') || '',
-    year: ''
+    year: '',
   });
+
+  const sortMode = (searchParams.get('sort') as SortMode) || 'default';
   
-  const { albums, total, isLoading, error, availableGenres, availableYears } = useAlbums(currentPage, itemsPerPage, filters);
+  const { albums, total, isLoading, error, availableGenres, availableYears } = useAlbums(currentPage, itemsPerPage, filters, sortMode);
 
   useEffect(() => {
     const params: Record<string, string> = {};
+    if (sortMode) params.sort = sortMode;
+
     if (filters.genre) params.genre = filters.genre;
     if (filters.search) params.search = filters.search;
     if (filters.year) params.year = filters.year;
     
     setSearchParams(params, { replace: true });
-  }, [filters.genre, filters.search, filters.year, setSearchParams]);
+  }, [filters, sortMode, setSearchParams]);
+
+  const handleSortChange = (newSort: string) => {
+    setSearchParams(prev => {
+      const newParams = new URLSearchParams(prev);
+      newParams.set('sort', newSort);
+      return newParams;
+    });
+    setCurrentPage(1);
+  };
 
   const handleSearchChange = (val: string) => {
     setFilters(prev => ({ ...prev, search: val }));
@@ -73,9 +86,11 @@ const AlbumsPage = () => {
         year={filters.year}
         genres={availableGenres}
         years={availableYears}
+        sortMode={sortMode}
         onSearchChange={handleSearchChange}
         onGenreChange={handleGenreChange}
         onYearChange={handleYearChange}
+        onSortChange={handleSortChange}
       />
 
       {!isLoading && !error && (

@@ -26,3 +26,11 @@ export interface Album {
   duration: string;
   size: string;
 }
+
+export interface FilterState {
+  search: string;
+  genre: string;
+  year: string;
+}
+
+export type SortMode = 'default' | 'random' | 'recently-added' | 'recently-played' | 'most-played';

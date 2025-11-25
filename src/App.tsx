@@ -68,11 +68,11 @@ function App() {
           ${!isAuthPage ? 'pt-12 pb-24' : ''} 
           ${!isAuthPage && isSidebarOpen ? 'md:ml-55' : ''}`}>
           <Routes>
-            <Route path="/" element={<Navigate to="/albums/all" replace />} />
+            <Route path="/" element={<Navigate to="/albums" replace />} />
             <Route path="/login" element={<AuthPage mode="login" />} />
             <Route path="/register" element={<AuthPage mode="register" />} />
             <Route path="/account" element={<AccountPage />} />
-            <Route path="/albums/all" element={<AlbumsPage />} />
+            <Route path="/albums" element={<AlbumsPage />} />
             <Route path="/albums/:albumId" element={<AlbumDetailsPages />} />
           </Routes>
         </main>
