@@ -15,6 +15,7 @@ import { useLocalStorage } from './hooks/useLocalStorage';
 import { PlayerProvider } from './context/PlayerContext'; 
 
 import { type Theme } from './types';
+import PlaylistsPage from './pages/PlaylistsPage';
 
 function App() {
   const [currentTheme, setCurrentTheme] = useLocalStorage<Theme>('app-theme', 'light');
@@ -74,8 +75,10 @@ function App() {
             <Route path="/register" element={<AuthPage mode="register" />} />
             <Route path="/account" element={<AccountPage />} />
             <Route path="/albums" element={<AlbumsPage />} />
-            <Route path="/albums/:albumId" element={<AlbumDetailsPages />} />
+            <Route path="/albums/:id" element={<AlbumDetailsPages />} />
             <Route path="/songs" element={<TracksPage />} />
+            <Route path="/playlists" element={<PlaylistsPage />} />
+            <Route path="/playlists/:id" element={<AlbumDetailsPages type="playlist" />} />
           </Routes>
         </main>
       </div>

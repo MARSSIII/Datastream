@@ -32,18 +32,46 @@ const mockAlbums: Album[] = [
   },
 ];
 
-export const useAlbum = (albumId: string) => {
+const mockPlaylists: Album[] = [
+  {
+    id: '1',
+    title: 'Chill Vibes',
+    artist: 'User',
+    date: '2024',
+    cover: '/covers/chill-vibes.jpg',
+    genres: [],
+    tracklist: [
+       { id: 10, trackNumber: 1, plays: 50, size: '5 MB', genres: ['Pop'], title: 'Best Song Ever', artist: 'Artist 1', album: "Single", src: '', cover: '', duration: '03:00', quality: 'MP3' },
+       { id: 11, trackNumber: 2, plays: 30, size: '4 MB', genres: ['Pop'], title: 'Another Great Song', artist: 'Artist 2', album: "Single", src: '', cover: '', duration: '02:45', quality: 'MP3' },
+    ],
+    trackCount: 1,
+    duration: '3:00',
+    size: '5 MB'
+  }
+];
+
+export const useAlbum = (id: string, type: 'album' | 'playlist' = 'album') => {
   const [album, setAlbum] = useState<Album>();
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchAlbums = () => {
+      setIsLoading(true);
+
       try {
-        setAlbum(mockAlbums.filter((obj) => obj.id == albumId)[0]);
+        const source = type === 'album' ? mockAlbums : mockPlaylists;
+        
+        const found = source.find((obj) => obj.id === id);
+        if (found) {
+            setAlbum(found);
+            setError(null);
+        } else {
+            setAlbum(undefined);
+        }
 
       } catch (e) {
-        setError('Cannot load album.');
+        setError('Cannot load data.');
         console.error(e);
       } finally {
         setIsLoading(false);
@@ -52,7 +80,7 @@ export const useAlbum = (albumId: string) => {
 
     fetchAlbums();
 
-  }, []);
+  }, [id, type]);
 
   return { album, isLoading, error };
 };

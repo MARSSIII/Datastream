@@ -11,17 +11,21 @@ import PlayIcon from '../assets/play.svg?react';
 import ShuffleIcon from '../assets/random-albums.svg?react';
 import PlaylistsIcon from '../assets/playlists.svg?react';
 
-const AlbumDetailsPage: React.FC = () => {
+interface AlbumDetailsPageProps {
+  type?: 'album' | 'playlist';
+}
+
+const AlbumDetailsPage: React.FC<AlbumDetailsPageProps> = ({ type = 'album' }) => {
   const { t } = useTranslation();
 
   const { playTrack, addTracks } = usePlayer();
 
-  const { albumId } = useParams();
-  if (!albumId) {
+  const { id } = useParams();
+  if (!id) {
     return <div className="p-6">Error: album ID missing!</div>;
   }
 
-  const { album, isLoading, error } = useAlbum(albumId);
+  const { album, isLoading, error } = useAlbum(id, type);
 
   if (isLoading) {
     return <div className="p-8">{t('loading')}</div>;
