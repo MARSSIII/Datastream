@@ -5,6 +5,7 @@ import AuthPage from './pages/AuthPage';
 import AccountPage from './pages/AccountPage';
 import AlbumsPage from './pages/AlbumsPage';
 import AlbumDetailsPages from './pages/AlbumDetailsPage';
+import TracksPage from './pages/TracksPage';
 
 import Header from './components/Header'
 import Sidebar from './components/Sidebar';
@@ -74,6 +75,7 @@ function App() {
             <Route path="/account" element={<AccountPage />} />
             <Route path="/albums" element={<AlbumsPage />} />
             <Route path="/albums/:albumId" element={<AlbumDetailsPages />} />
+            <Route path="/songs" element={<TracksPage />} />
           </Routes>
         </main>
       </div>
