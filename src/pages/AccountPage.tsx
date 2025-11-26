@@ -6,16 +6,12 @@ import Dropdown from '../components/Dropdown';
 
 import { useLocalStorage } from '../hooks/useLocalStorage';
 
-import ChevronIcon from '../assets/chevron-down.svg?react';
-
 const languages = [
   { code: 'en', label: 'English' },
   { code: 'ru', label: 'Русский' },
 ];
 
 const AccountPage: React.FC = () => {
-  const [isOpen, setIsOpen] = useState(false);
-
   const { i18n, t } = useTranslation();
   const [savedLang, setSavedLang] = useLocalStorage<string>('app-lang', 'en');
 
@@ -31,7 +27,6 @@ const AccountPage: React.FC = () => {
     const lang = languages.find(l => l.label === str);
     if (lang) {
       setSavedLang(lang.code);
-      setIsOpen(false);
     }
   };
 
