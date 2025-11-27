@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 
 import { type Track } from '../types';
 
@@ -51,12 +52,25 @@ const Tracklist: React.FC<TracklistProps> = ({ tracks, onPlayTrack, showAlbum = 
           <p>0</p>
           <p className="text-center py-3">{index + 1}</p>
           <p className="truncate">{track.title}</p>
-          <p className="truncate">{track.artist}</p>
+
+          <Link 
+            to={`/artists/${track.artistId}`} 
+            className="hover:underline relative text-link"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {track.artist}
+          </Link>
 
           {showAlbum && (
-            <p className="hidden md:block text-fg/80">
-              {track.album}
-            </p>
+            <div className="hidden md:block text-link truncate">
+              <Link 
+                to={`/albums/${track.albumId}`}
+                className="hover:underline relative"
+                onClick={(e) => e.stopPropagation()}
+              >
+                {track.album}
+              </Link>
+            </div>
           )}
 
           <p>{track.duration}</p>

@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react';
 import { type Track, type FilterState, type SortMode } from '../types';
 
 const seedTracks: Track[] = [
-  { id: 1, trackNumber: 1, plays: 5, size: '15.75 MB', genres: ['classical', 'instrumental'], title: '01 Schwanengesang, D. 957_ IV. Ständchen (v0.10.27)', artist: '1000 Eyes', album: "Schwanengesang", src: '/music/01 Schwanengesang, D. 957_ IV. Ständchen (v0.10.27).flac', cover: '/covers/Schwanengesang.png', duration: '03:13', quality: 'FLAC' },
-  { id: 2, trackNumber: 2, plays: 2, size: '25.15 MB', genres: ['classical', 'instrumental'], title: '01 Schwanengesang, D. 957_ IV. Ständchen (v0.10.27.slw)', artist: '1000 Eyes', album: "Schwanengesang", src: '/music/02 Schwanengesang, D. 957_ IV. Ständchen (v0.10.27.slw).flac', cover: '/covers/Schwanengesang.png', duration: '02:33', quality: 'FLAC' }
+  { id: 1, trackNumber: 1, plays: 5, size: '15.75 MB', genres: ['classical', 'instrumental'], title: '01 Schwanengesang, D. 957_ IV. Ständchen (v0.10.27)', artist: '1000 Eyes', artistId: "1", album: "Schwanengesang", albumId: "2", src: '/music/01 Schwanengesang, D. 957_ IV. Ständchen (v0.10.27).flac', cover: '/covers/Schwanengesang.png', duration: '03:13', quality: 'FLAC' },
+  { id: 2, trackNumber: 2, plays: 2, size: '25.15 MB', genres: ['classical', 'instrumental'], title: '01 Schwanengesang, D. 957_ IV. Ständchen (v0.10.27.slw)', artist: '1000 Eyes', artistId: "1", album: "Schwanengesang", albumId: "2", src: '/music/02 Schwanengesang, D. 957_ IV. Ständchen (v0.10.27.slw).flac', cover: '/covers/Schwanengesang.png', duration: '02:33', quality: 'FLAC' }
 ];
 
 const allMockTracks: Track[] = [];

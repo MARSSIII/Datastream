@@ -5,6 +5,7 @@
   --color-accent: #f1f2f4;
   --color-fg: black;
   --color-hv: #e0e0e0;
+  --color-link: #3f51b5;
 }
 
 @layer base {
@@ -13,5 +14,6 @@
     --color-accent: #4f4f4f;
     --color-fg: white;
     --color-hv: #747474;
+    --color-link: #2b8cdb;
   }
 }
