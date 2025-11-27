@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
@@ -24,6 +25,8 @@ const AlbumDetailsPage: React.FC<AlbumDetailsPageProps> = ({ type = 'album' }) =
   if (!id) {
     return <div className="p-6">Error: album ID missing!</div>;
   }
+
+  const [selectedTrackIds, setSelectedTrackIds] = useState<string[]>([]);
 
   const { album, isLoading, error } = useAlbum(id, type);
 
@@ -77,7 +80,12 @@ const AlbumDetailsPage: React.FC<AlbumDetailsPageProps> = ({ type = 'album' }) =
       </div>
 
       <div className="mt-8">
-        <Tracklist tracks={album.tracklist} onPlayTrack={playTrack} />
+        <Tracklist
+          tracks={album.tracklist}
+          onPlayTrack={playTrack}
+          selectedIds={selectedTrackIds}
+          onSelectionChange={setSelectedTrackIds}
+        />
       </div>
     </div>
   );

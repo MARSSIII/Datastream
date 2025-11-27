@@ -1,7 +1,7 @@
 export type Theme = 'light' | 'dark';
 
 export interface Track {
-  id: number;
+  id: string;
   trackNumber: number;
   title: string;
   artist: string;

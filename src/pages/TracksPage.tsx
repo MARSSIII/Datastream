@@ -31,6 +31,8 @@ const TracksPage = () => {
   
   const { tracks, total, isLoading, error, availableGenres, availableYears } = useTracks(currentPage, itemsPerPage, filters, sortMode);
 
+  const [selectedTrackIds, setSelectedTrackIds] = useState<string[]>([]);
+
   useEffect(() => {
     const params: Record<string, string> = {};
     if (sortMode && sortMode !== 'default') params.sort = sortMode;
@@ -96,6 +98,8 @@ const TracksPage = () => {
             tracks={tracks} 
             onPlayTrack={playTrack}
             showAlbum={true}
+            selectedIds={selectedTrackIds}
+            onSelectionChange={setSelectedTrackIds}
           />
         </div>
       )}
