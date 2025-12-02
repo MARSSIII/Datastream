@@ -64,7 +64,7 @@ const Player: React.FC = () => {
   const handleTimeUpdate = (e: React.SyntheticEvent<HTMLAudioElement>) => {
     setCurrentTime(e.currentTarget.currentTime);
   };
-  
+
   const handleLoadedMetadata = (e: React.SyntheticEvent<HTMLAudioElement>) => {
     setDuration(e.currentTarget.duration);
   };
@@ -82,17 +82,20 @@ const Player: React.FC = () => {
     }
   };
 
+  const progress = duration > 0 ? (currentTime / duration) * 100 : 0;
+  const volumeProgress = volume * 100;
+
   return (
     <div className="fixed bottom-0 left-0 right-0 p-3 bg-accent text-fg z-50 transition-colors duration-300 ease-in-out">
       {isQueueOpen && (
-        <PlayQueue 
+        <PlayQueue
           queue={queue}
           currentTrack={currentTrack}
           onPlayTrack={setTrack}
           onClose={() => setIsQueueOpen(false)}
         />
       )}
-      
+
       <audio
         ref={audioRef}
         src={currentTrack?.src}
@@ -103,7 +106,7 @@ const Player: React.FC = () => {
             else togglePlay();
         }}
       />
-      
+
       <div className="flex items-center gap-5">
         <img src={currentTrack.cover} alt={currentTrack.title} className="w-16 h-16 rounded hidden md:block" />
 
@@ -112,44 +115,52 @@ const Player: React.FC = () => {
             <p className="font-bold">{currentTrack.title}</p>
             <p>{currentTrack.artist}</p>
           </div>
-          
+
           <div className="w-full flex items-center gap-2">
             <span className="text-sm text-right">{formatTime(currentTime)}</span>
-              <input
-                type="range"
-                min={0}
-                max={duration || 0}
-                value={currentTime}
-                onChange={handleSeek}
-                className="w-full h-1 bg-gray-400 rounded-lg appearance-none cursor-pointer"
-              />
-              <span className="text-sm w-10 text-left">{formatTime(duration)}</span>
+            <input
+              type="range"
+              min={0}
+              max={duration || 0}
+              value={currentTime}
+              onChange={handleSeek}
+              className="w-full h-1 bg-gray-400 rounded-lg appearance-none cursor-pointer"
+              style={{
+                background: `linear-gradient(to right,
+                    #3b82f6 0%,
+                    #3b82f6 ${progress}%,
+                    #9ca3af ${progress}%,
+                    #9ca3af 100%
+                  )`,
+              }}
+            />
+            <span className="text-sm w-10 text-left">{formatTime(duration)}</span>
           </div>
         </div>
 
         <button onClick={() => setIsQueueOpen(!isQueueOpen)} title="Play Queue">
-          <PlaylistsIcon className='w-8 h-8 cursor-pointer fill-current'/>
+          <PlaylistsIcon className='w-8 h-8 cursor-pointer fill-current' />
         </button>
 
         <button onClick={handlePrev} disabled={!hasPrev}>
-          <SkipBackwardIcon className='w-8 h-8 cursor-pointer fill-current'/>
+          <SkipBackwardIcon className='w-8 h-8 cursor-pointer fill-current' />
         </button>
 
         <button onClick={togglePlay}>
           {isPlaying ? (
-            <PauseIcon className='w-6 h-6 cursor-pointer fill-current'/>
+            <PauseIcon className='w-6 h-6 cursor-pointer fill-current' />
           ) : (
-            <PlayIcon className='w-6 h-6 cursor-pointer fill-current'/>
+            <PlayIcon className='w-6 h-6 cursor-pointer fill-current' />
           )}
         </button>
 
         <button onClick={handleNext} disabled={!hasNext}>
-          <SkipForwardIcon className='w-8 h-8 cursor-pointer fill-current'/>
+          <SkipForwardIcon className='w-8 h-8 cursor-pointer fill-current' />
         </button>
 
         <div className='hidden md:flex items-center gap-2'>
           <VolumeIcon className="w-6 h-6 fill-current" />
-          
+
           <input
             type="range"
             min={0}
@@ -158,6 +169,14 @@ const Player: React.FC = () => {
             value={volume}
             onChange={handleVolumeChange}
             className="w-24 h-1 bg-gray-400 rounded-lg appearance-none cursor-pointer"
+            style={{
+              background: `linear-gradient(to right,
+              #3b82f6 0%,
+              #3b82f6 ${volumeProgress}%,
+              #9ca3af ${volumeProgress}%,
+              #9ca3af 100%
+              )`,
+            }}
           />
         </div>
       </div>
