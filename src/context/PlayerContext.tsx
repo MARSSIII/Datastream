@@ -3,7 +3,7 @@ import { useLocalStorage } from '../hooks/useLocalStorage';
 import { type Track } from '../types';
 
 const defaultTrack: Track = { 
-  id: 0, trackNumber: 0, plays: 0, size: '0 MB', genres: [], 
+  id: '0', artistId: '0', albumId: '0', trackNumber: 0, plays: 0, size: '0 MB', genres: [], 
   title: 'Select a track to play', artist: '...', album: '...',
   src: '', cover: '', duration: '00:00', quality: 'FLAC' 
 };
