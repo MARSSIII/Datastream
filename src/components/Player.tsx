@@ -82,8 +82,14 @@ const Player: React.FC = () => {
     }
   };
 
-  const progress = duration > 0 ? (currentTime / duration) * 100 : 0;
-  const volumeProgress = volume * 100;
+const clampedCurrentTime =
+  duration > 0 ? Math.min(Math.max(currentTime, 0), duration) : 0;
+
+const progress =
+  duration > 0
+    ? Math.min(100, Math.max(0, (clampedCurrentTime / duration) * 100))
+    : 0;
+const volumeProgress = Math.min(100, Math.max(0, volume * 100));
 
   return (
     <div className="fixed bottom-0 left-0 right-0 p-3 bg-accent text-fg z-50 transition-colors duration-300 ease-in-out">
@@ -118,22 +124,24 @@ const Player: React.FC = () => {
 
           <div className="w-full flex items-center gap-2">
             <span className="text-sm text-right">{formatTime(currentTime)}</span>
+              ф
             <input
               type="range"
               min={0}
               max={duration || 0}
-              value={currentTime}
+              step={0.01}
+              value={clampedCurrentTime}
               onChange={handleSeek}
               className="w-full h-1 bg-gray-400 rounded-lg appearance-none cursor-pointer"
               style={{
                 background: `linear-gradient(to right,
-                    #3b82f6 0%,
-                    #3b82f6 ${progress}%,
-                    #9ca3af ${progress}%,
-                    #9ca3af 100%
-                  )`,
+                #3b82f6 0%,
+                #3b82f6 ${progress}%,
+                #9ca3af ${progress}%,
+                #9ca3af 100%
+                )`,
               }}
-            />
+              />
             <span className="text-sm w-10 text-left">{formatTime(duration)}</span>
           </div>
         </div>
